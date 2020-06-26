@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2017",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": "src",
+    "outDir": "build",
+    "pretty": true
+  },
+  "include": [
+    "src/index.ts",
+    "figma.d.ts",
+    "manifest.json"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
