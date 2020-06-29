@@ -68,6 +68,10 @@ button {
     display: none;
 }
 
+.group-input.hidden.visible {
+    display: block;
+}
+
 .group-input input {
     opacity: 0;
     position: absolute;

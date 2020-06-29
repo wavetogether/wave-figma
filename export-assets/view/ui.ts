@@ -92,8 +92,6 @@ const PROFILES = {
 const DEFAULT_PROFILE = 'sP3C';
 const HIDDEN_PROFILES = ['sGry', 'ROMM', 'R709', 'REC2020C', 'REC2020', 'A98C', 'APLC', 'ACMC', 'AWGC'];
 
-let lastVersion = 'v2';
-
 function setButtonState(state: boolean) {
     const buttonDOM = document.getElementById('btn-save') as HTMLButtonElement;
     buttonDOM.disabled = !state;
@@ -157,7 +155,7 @@ window.onload = () => {
         (target as HTMLElement).style.display = 'none';
 
         for (let i = 0; i < hiddenProfiles.length; i++) {
-            hiddenProfiles[i].classList.remove('hidden');
+            hiddenProfiles[i].classList.add('visible');
         }
     };
 };
