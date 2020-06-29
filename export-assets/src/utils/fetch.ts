@@ -1,5 +1,18 @@
 import {alert, errorMessage} from './error';
 
+export function getExportables(): Array<SceneNode> {
+    const selections: ReadonlyArray<SceneNode> = figma.currentPage.selection;
+    const exportables: Array<SceneNode> = [];
+
+    selections.forEach((node) => {
+        if (node.exportSettings.length > 0) {
+            exportables.push(node);
+        }
+    });
+
+    return exportables;
+}
+
 export function getSelections(): boolean | ReadonlyArray<SceneNode> {
     const selections = figma.currentPage.selection;
 

@@ -8,7 +8,6 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    background: red;
 }
 * {
     font-family: 'Inter', sans-serif;
@@ -23,24 +22,220 @@ button {
 
 #content {
     display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 16px 24px 16px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #909196;
+}
+
+.section-input {
+    width: calc(100% + 8px);
+    background: white;
+    margin-left: -4px;
+    margin-top: 12px;
+}
+
+.group-input {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+    height: 32px;
+    background: #F5F6F8;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.group-input.hidden {
+    display: none;
+}
+
+.group-input input {
+    opacity: 0;
     position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    padding: 16px 12px 24px 12px;
-    background: yellow;
+}
+
+.group-input .radio-mark {
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    background: #E3E4E8;
+    float: left;
+}
+
+.group-input .radio-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 32px;
+    color: #595C61;
+}
+
+.group-input:hover {
+    background: #EFEFF0;
+}
+
+.group-input input:checked ~ .radio-mark {
+    background: #45E0FF;
+}
+
+.group-input input:checked ~ .radio-mark:after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: #FFF;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.group-input input:checked ~ .radio-label {
+    color: #2E113B;
+}
+
+.profile-version-list.disabled {
+    opacity: 30%;
+    cursor: not-allowed;
+}
+
+.profile-version-list.disabled:hover {
+    background: #F5F6F8;
+}
+
+#btn-more-profile {
+    display: block;
+    box-sizing: border-box;
+    width: calc(100% + 8px);
+    height: 32px;
+    margin-left: -4px;
+    margin-bottom: 6px;
+    background: none;
+    border: 1px solid #F5F6F8;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: left;
+    padding: 0 8px 0 11px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 30px;
+    color: #909196;
+}
+
+#btn-more-profile .deco {
+    display: block;
+    width: 2px;
+    height: 2px;
+    border-radius: 2px;
+    background: #909196;
+    float: left;
+    margin: 14px 2px 14px 0;
+}
+
+#btn-more-profile .deco:last-child {
+    margin-right: 11px;
+}
+
+#btn-more-profile:hover {
+    color: #68686d;
+}
+
+#btn-more-profile:hover .deco {
+    background: #68686d;
+}
+
+.section-separator {
+    width: calc(100% + 8px);
+    height: 1px;
+    border-radius: 1px;
+    margin-left: -4px;
+    background: #E3E4E8;
+    margin-bottom: 20px;
+}
+
+.section-description {
+    width: 100%;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 14px;
+    color: #909196;
+}
+
+.section-description #color-profile-github {
+    color: #06D6FF;
+    text-decoration: none;
+}
+
+.section-description #color-profile-github:hover {
+    color: #00B8DC;
+}
+
+.section-description #library-list {
+    display: inline-block;
+    margin: 20px 0 4px -4px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 24px;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 12px;
+    background: #F5F6F8;
+    text-decoration: none;
+    color: #909196;
+}
+
+.section-description #library-list:hover {
+    background: #EFEFF0;
 }
 
 #footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 40px;
+    z-index: 10;
 }
+
 #footer #btn-save {
     width: 100%;
     height: 100%;
+    font-size: 11px;
+    font-weight: 600;
+    background: #FF3E64;
+    color: #FFF;
+    cursor: pointer;
+}
+
+#footer #btn-save:hover {
+    background: #E6385A;
+}
+
+#footer #btn-save:disabled {
+    background: #E3E4E8;
+    color: #F5F6F8;
+    cursor: not-allowed;
 }
 
 #loading {
@@ -60,34 +255,61 @@ button {
 
 /* Loading Animation */
 
-.lds-circle {
-    display: inline-block;
-    transform: translateZ(1px);
+@keyframes spinner-dom-o {
+    0%    { opacity: 1; transform: translate(0 0) }
+    49.99% { opacity: 1; transform: translate(16px,0) }
+    50%    { opacity: 0; transform: translate(16px,0) }
+    100%    { opacity: 0; transform: translate(0,0) }
 }
-.lds-circle > div {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    margin: 8px;
+
+@keyframes spinner-dom {
+    0% { transform: translate(0,0) }
+    50% { transform: translate(16px,0) }
+    100% { transform: translate(0,0) }
+}
+
+.spinner-dom div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background: #fff;
-    animation: lds-circle 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    top: 42px;
+    left: 34px;
 }
-@keyframes lds-circle {
-    0%, 100% {
-        animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-    }
-    0% {
-        transform: rotateY(0deg);
-        opacity: 0.7;
-    }
-    50% {
-        transform: rotateY(1800deg);
-        animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
-        opacity: 1;
-    }
-    100% {
-        transform: rotateY(3600deg);
-        opacity: 0.7;
-    }
+
+.spinner-dom div:nth-child(1) {
+    background: #41cbff;
+    animation: spinner-dom 0.8s linear infinite;
+    animation-delay: -0.4s;
 }
+
+.spinner-dom div:nth-child(2) {
+    background: #ff2663;
+    animation: spinner-dom 0.8s linear infinite;
+    animation-delay: 0s;
+}
+
+.spinner-dom div:nth-child(3) {
+    background: #41cbff;
+    animation: spinner-dom-o 0.8s linear infinite;
+    animation-delay: -0.4s;
+}
+
+.loading-spinner {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0);
+}
+
+.spinner-dom {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+}
+
+.spinner-dom div { box-sizing: content-box; }

@@ -2,17 +2,44 @@
 <div id="content">
     <div class="section">
         <h2 class="section-title">Color Profile</h2>
-        <li class="section-input">
-
-        </li>
+        <div id="profile-list" class="section-input"></div>
+        <button id="btn-more-profile">
+            <span class="deco"></span><span class="deco"></span><span class="deco"></span>
+            Show more profiles
+        </button>
     </div>
     <div class="section">
-
+        <h2 class="section-title">ICC Version</h2>
+        <div class="section-input">
+            <label class="profile-version-list group-input">
+                <input type="radio" checked="checked" name="profile-version" value="v4">
+                <span class="radio-mark"></span>
+                <span class="radio-label">v4</span>
+            </label>
+            <label class="profile-version-list group-input">
+                <input type="radio" name="profile-version" value="v2">
+                <span class="radio-mark"></span>
+                <span class="radio-label">v2</span>
+            </label>
+        </div>
+    </div>
+    <div class="section">
+        <div class="section-separator"></div>
+        <div class="section-description">
+            This plugin uses color profiles from Github repository <a id="color-profile-github" href="https://github.com/saucecontrol/Compact-ICC-Profiles">saucecontrol/Compact-ICC-Profiles</a>. For more information, please visit the link.
+            <br>
+            <a id="library-list" href="#">Libraries We Use</a>
+        </div>
     </div>
 </div>
 <div id="footer">
     <button id="btn-save">Save</button>
 </div>
 <div id="loading">
-    <div class="lds-circle"><div></div></div>
+    <div class="loading-spinner">
+        <div class="spinner-dom">
+            <div></div><div></div><div></div>
+        </div>
+    </div>
 </div>
+
