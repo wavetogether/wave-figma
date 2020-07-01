@@ -158,6 +158,14 @@ window.onload = () => {
             hiddenProfiles[i].classList.add('visible');
         }
     };
+
+    document.getElementById('btn-refresh').onclick = () => {
+        parent.postMessage({
+            pluginMessage: {
+                type: 'onClickRefresh'
+            }
+        }, '*');
+    };
 };
 
 window.onmessage = (e) => {
