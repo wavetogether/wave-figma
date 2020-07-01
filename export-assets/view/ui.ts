@@ -145,8 +145,6 @@ window.onload = () => {
                 type: 'onClickSave'
             }
         }, '*');
-
-        alert('save');
     };
 
     document.getElementById('btn-more-profile').onclick = ({target}) => {
