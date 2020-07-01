@@ -4,11 +4,13 @@ export function getExportables(): Array<SceneNode> {
     const selections: ReadonlyArray<SceneNode> = figma.currentPage.selection;
     const exportables: Array<SceneNode> = [];
 
-    selections.forEach((node) => {
-        if (node.exportSettings.length > 0) {
-            exportables.push(node);
-        }
-    });
+    if (!!selections) {
+        selections.forEach((node) => {
+            if (node.exportSettings.length > 0) {
+                exportables.push(node);
+            }
+        });
+    }
 
     return exportables;
 }

@@ -223,6 +223,9 @@ button {
 }
 
 #footer #btn-save {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     font-size: 11px;
@@ -240,6 +243,31 @@ button {
     background: #E3E4E8;
     color: #F5F6F8;
     cursor: not-allowed;
+}
+
+#footer #btn-refresh {
+    display: none;
+}
+
+#footer #btn-save:disabled ~ #btn-refresh {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background: #F5F6F8;
+    cursor: pointer;
+}
+
+#footer #btn-save:disabled ~ #btn-refresh:hover {
+    background: #ECEDF0;
+}
+
+#footer #btn-refresh img {
+    width: 16px;
+    height: 16px;
 }
 
 #loading {

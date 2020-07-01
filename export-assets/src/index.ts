@@ -23,7 +23,6 @@ function init() {
 }
 
 // Note: Main Logic
-
 figma.on('selectionchange', onChangeSelection);
 figma.ui.onmessage = async (msg) => {
     switch (msg.type) {
