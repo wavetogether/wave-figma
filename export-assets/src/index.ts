@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
-import {alert} from './utils/error';
-import {getSelections, getExportables} from './utils/fetch';
+import {alert} from './utils/notify';
+import {getExportables, exportAsync, appendProfiles} from './utils/fetch';
+
 import {convertGlyphsToData, convertDataToConfig} from './utils/convert';
 import {generateIconFont, generateFontBuffer} from './utils/generateFont';
 
@@ -22,17 +23,30 @@ function init() {
     onChangeSelection();
 }
 
-// Note: Main Logic
 figma.on('selectionchange', onChangeSelection);
 figma.ui.onmessage = async (msg) => {
     switch (msg.type) {
         case 'onClickSave':
+            const nodes = getExportables();
+            const buffers = await exportAsync(nodes);
+            console.log('ExportAsync:', buffers);
+            const images = appendProfiles(buffers);
+            console.log('AppendProfiles:', images);
+
+            figma.ui.postMessage({
+                type: 'onSave',
+                data: {
+                    buffers
+                }
+            });
+
+            break;
+        case 'onClickRefresh':
+            onChangeSelection();
             break;
         default:
             alert('Sent unknown action message');
     }
 };
-
-console.log(getSelections()[0])
 
 init();

@@ -18,3 +18,7 @@ export function errorMessage (errType: String) {
             return '⚠️ Something went wrong.';
     }
 }
+
+export function log (msg: String) {
+    console.log(`==== ${msg} ===`);
+}

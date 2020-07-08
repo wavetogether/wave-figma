@@ -1,6 +1,6 @@
 import './ui.css';
 import {saveAs} from 'file-saver';
-import JSZip from 'jszip';
+// import JSZip from 'jszip';
 /*
 
 function simplePost(type: string) {
@@ -96,6 +96,7 @@ function setButtonState(state: boolean) {
     const buttonDOM = document.getElementById('btn-save') as HTMLButtonElement;
     buttonDOM.disabled = !state;
 }
+
 window.onload = () => {
     const profileList = document.getElementById('profile-list');
     const versionList: NodeListOf<HTMLInputElement> = document.getElementsByName('profile-version') as NodeListOf<HTMLInputElement>
@@ -166,7 +167,7 @@ window.onload = () => {
     };
 };
 
-window.onmessage = (e) => {
+window.onmessage = async (e) => {
     if (!e.data) {
         return;
     }
