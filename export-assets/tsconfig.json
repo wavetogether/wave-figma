@@ -12,7 +12,8 @@
     ],
     "baseUrl": "src",
     "outDir": "build",
-    "pretty": true
+    "pretty": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/index.ts",
