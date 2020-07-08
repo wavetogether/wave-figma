@@ -19,5 +19,5 @@ names.forEach(name => {
     profiles[name.slice(0, -4)] = Array.from(data);
 });
 
-fs.writeFileSync('profiles.json', JSON.stringify(profiles));
+fs.writeFileSync('src/utils/profiles.json', JSON.stringify(profiles));
 console.log('Convert color profiles (.icc) to arrays successfully');
