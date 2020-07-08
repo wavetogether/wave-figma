@@ -1,0 +1,62 @@
+{
+  "sP3C": {
+    "name": "Display P3 (compatible)",
+    "v4": "DisplayP3Compat-v4",
+    "v2": "DisplayP3Compat-v2-magic"
+  },
+  "sP3": {
+    "name": "Display P3",
+    "v4": "DisplayP3-v4",
+    "v2": "DisplayP3-v2-magic"
+  },
+  "sRGB": {
+    "name": "sRGB",
+    "v4": "sRGB-v4",
+    "v2": "sRGB-v2-magic"
+  },
+  "sGry": {
+    "name": "sGrey",
+    "v4": "sGrey-v4",
+    "v2": "sGrey-v2-magic"
+  },
+  "ROMM": {
+    "name": "ProPhoto RGB (ROMM RGB)",
+    "v4": "ProPhoto-v4",
+    "v2": "ProPhoto-v2-magic"
+  },
+  "R709": {
+    "name": "Rec. 709 (BT.709)",
+    "v4": "Rec709-v4",
+    "v2": "Rec709-v2-magic"
+  },
+  "REC2020C": {
+    "name": "Rec. 2020 (compatible)",
+    "v4": "Rec2020Compat-v4",
+    "v2": "Rec2020Compat-v2-magic"
+  },
+  "REC2020": {
+    "name": "Rec. 2020",
+    "v4": "Rec2020-v4",
+    "v2": "Rec2020-v2-magic"
+  },
+  "A98C": {
+    "name": "Adobe RGB (1998)",
+    "v4": "",
+    "v2": "AdobeCompat-v2"
+  },
+  "APLC": {
+    "name": "Apple RGB",
+    "v4": "",
+    "v2": "AppleCompat-v2"
+  },
+  "ACMC": {
+    "name": "ColorMatch RGB",
+    "v4": "",
+    "v2": "ColorMatchCompat-v2"
+  },
+  "AWGC": {
+    "name": "Wide Gamut RGB",
+    "v4": "",
+    "v2": "WideGamutCompat-v2"
+  }
+}
