@@ -1,7 +1,73 @@
 import './ui.css';
 import {saveAs} from 'file-saver';
-// import JSZip from 'jszip';
-/*
+import * as JSZip from 'jszip';
+
+const PROFILES = {
+    // Updated on June 29, 2020
+    'sP3C': {
+        name: 'Display P3 (compatible)',
+        v4: true,
+        v2: true
+    },
+    'sP3': {
+        name: 'Display P3',
+        v4: true,
+        v2: true
+    },
+    'sRGB': {
+        name: 'sRGB',
+        v4: true,
+        v2: true
+    },
+    'sGry': {
+        name: 'sGrey',
+        v4: true,
+        v2: true
+    },
+    'ROMM': {
+        name: 'ProPhoto RGB (ROMM RGB)',
+        v4: true,
+        v2: true
+    },
+    'R709': {
+        name: 'Rec. 709 (BT.709)',
+        v4: true,
+        v2: true
+    },
+    'REC2020C': {
+        name: 'Rec. 2020 (compatible)',
+        v4: true,
+        v2: true
+    },
+    'REC2020': {
+        name: 'Rec. 2020',
+        v4: true,
+        v2: true
+    },
+    'A98C': {
+        name: 'Adobe RGB (1998)',
+        v4: false,
+        v2: true
+    },
+    'APLC': {
+        name: 'Apple RGB',
+        v4: false,
+        v2: true
+    },
+    'ACMC': {
+        name: 'ColorMatch RGB',
+        v4: false,
+        v2: true
+    },
+    'AWGC': {
+        name: 'Wide Gamut RGB',
+        v4: false,
+        v2: true
+    }
+};
+
+const DEFAULT_PROFILE = 'sP3C';
+const HIDDEN_PROFILES = ['sGry', 'ROMM', 'R709', 'REC2020C', 'REC2020', 'A98C', 'APLC', 'ACMC', 'AWGC'];
 
 function simplePost(type: string) {
     parent.postMessage({
@@ -9,92 +75,25 @@ function simplePost(type: string) {
     }, '*');
 }
 
-function saveFont(data) {
-    const zip = new JSZip();
-    const {fontBuffer, fontConfig, fontName} = data;
-
-    zip.file(`${fontName}.ttf`, Buffer.from(fontBuffer.buffer));
-    zip.file(`${fontName}Config.json`, JSON.stringify(fontConfig));
-
-    zip.generateAsync({
-        type: 'blob'
-    }).then(zipFile => {
-        saveAs(zipFile, `${fontName}.zip`);
-        simplePost('done');
-    });
-}
-*/
-
-const PROFILES = {
-    // Updated on June 29, 2020
-    'sP3C': {
-        name: 'Display P3 (compatible)',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/DisplayP3Compat-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/DisplayP3Compat-v2-magic.icc?raw=true'
-    },
-    'sP3': {
-        name: 'Display P3',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/DisplayP3-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/DisplayP3-v2-magic.icc?raw=true'
-    },
-    'sRGB': {
-        name: 'sRGB',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/sRGB-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/sRGB-v2-magic.icc?raw=true'
-    },
-    'sGry': {
-        name: 'sGrey',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/sGrey-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/sGrey-v2-magic.icc?raw=true'
-    },
-    'ROMM': {
-        name: 'ProPhoto RGB (ROMM RGB)',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/ProPhoto-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/ProPhoto-v2-magic.icc?raw=true'
-    },
-    'R709': {
-        name: 'Rec. 709 (BT.709)',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec709-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec709-v2-magic.icc?raw=true'
-    },
-    'REC2020C': {
-        name: 'Rec. 2020 (compatible)',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec2020Compat-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec2020Compat-v2-magic.icc?raw=true'
-    },
-    'REC2020': {
-        name: 'Rec. 2020',
-        v4: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec2020-v4.icc?raw=true',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/Rec2020-v2-magic.icc?raw=true'
-    },
-    'A98C': {
-        name: 'Adobe RGB (1998)',
-        v4: '',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/AdobeCompat-v2.icc?raw=true'
-    },
-    'APLC': {
-        name: 'Apple RGB',
-        v4: '',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/AppleCompat-v2.icc?raw=true'
-    },
-    'ACMC': {
-        name: 'ColorMatch RGB',
-        v4: '',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/ColorMatchCompat-v2.icc?raw=true'
-    },
-    'AWGC': {
-        name: 'Wide Gamut RGB',
-        v4: '',
-        v2: 'https://github.com/saucecontrol/Compact-ICC-Profiles/blob/master/profiles/WideGamutCompat-v2.icc?raw=true'
-    }
-};
-
-const DEFAULT_PROFILE = 'sP3C';
-const HIDDEN_PROFILES = ['sGry', 'ROMM', 'R709', 'REC2020C', 'REC2020', 'A98C', 'APLC', 'ACMC', 'AWGC'];
-
 function setButtonState(state: boolean) {
     const buttonDOM = document.getElementById('btn-save') as HTMLButtonElement;
     buttonDOM.disabled = !state;
+}
+
+function saveImages(images) {
+    // @ts-ignore
+    const zip = new JSZip();
+
+    for (let image of images) {
+        zip.file(`${image.name}`, Buffer.from(image.data));
+    }
+
+    zip.generateAsync({
+       type: 'blob'
+    }).then(zipFile => {
+       saveAs(zipFile, 'assets.zip');
+       simplePost('onSaveDone');
+    });
 }
 
 window.onload = () => {
@@ -130,7 +129,8 @@ window.onload = () => {
                 versionList[1].checked = true;
                 (versionList[0].parentNode as HTMLElement).classList.add('disabled');
             } else {
-                (versionList[0].parentNode as HTMLElement).classList.remove('disabled')
+                (versionList[0].parentNode as HTMLElement).classList.remove('disabled');
+                versionList[0].checked = true;
             }
         };
     });
@@ -141,11 +141,20 @@ window.onload = () => {
         loading.style.zIndex = '100';
         loading.style.opacity = '1';
 
-        parent.postMessage({
-            pluginMessage: {
-                type: 'onClickSave'
-            }
-        }, '*');
+        const profile: HTMLInputElement = document.querySelector("input[name='color-profile']:checked");
+        const version: HTMLInputElement = document.querySelector("input[name='profile-version']:checked");
+
+        setTimeout(() => {
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'onClickSave',
+                    data: {
+                        name: profile.value,
+                        version: version.value
+                    }
+                }
+            }, '*');
+        }, 100);
     };
 
     document.getElementById('btn-more-profile').onclick = ({target}) => {
@@ -159,29 +168,30 @@ window.onload = () => {
     };
 
     document.getElementById('btn-refresh').onclick = () => {
-        parent.postMessage({
-            pluginMessage: {
-                type: 'onClickRefresh'
-            }
-        }, '*');
+        simplePost('onClickRefresh');
     };
 };
 
-window.onmessage = async (e) => {
+window.onmessage = (e) => {
     if (!e.data) {
         return;
     }
 
     const msg = e.data?.pluginMessage;
 
+    if (!msg) {
+        return;
+    }
+
     switch (msg?.type) {
         case 'onChangeSelection':
             setButtonState(msg?.data?.isEnabled);
             break;
         case 'onSave':
+            saveImages(msg?.data?.images);
             break;
         default:
-            console.log('message type checked');
+            console.error('Unknown message type is received');
     }
 };
 

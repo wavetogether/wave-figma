@@ -1,14 +1,8 @@
-import _ from 'lodash';
-
 import {alert} from './utils/notify';
-import {getExportables, exportAsync, appendProfiles} from './utils/fetch';
-
-import {convertGlyphsToData, convertDataToConfig} from './utils/convert';
-import {generateIconFont, generateFontBuffer} from './utils/generateFont';
+import {getExportables, exportAsync, appendProfile} from './utils/fetch';
 
 function onChangeSelection() {
     const exportableNodes: Array<SceneNode> = getExportables();
-    console.log(exportableNodes);
 
     figma.ui.postMessage({
         type: 'onChangeSelection',
@@ -24,25 +18,34 @@ function init() {
 }
 
 figma.on('selectionchange', onChangeSelection);
-figma.ui.onmessage = async (msg) => {
+figma.ui.onmessage = msg => {
+    console.log(msg.type);
     switch (msg.type) {
         case 'onClickSave':
             const nodes = getExportables();
-            const buffers = await exportAsync(nodes);
-            console.log('ExportAsync:', buffers);
-            const images = appendProfiles(buffers);
-            console.log('AppendProfiles:', images);
 
-            figma.ui.postMessage({
-                type: 'onSave',
-                data: {
-                    buffers
-                }
+            exportAsync(nodes).then(images => {
+                console.log('exportAsync');
+                appendProfile(images, msg.data).then(imageData => {
+                    console.log('appendProfiles');
+
+                    figma.ui.postMessage({
+                        type: 'onSave',
+                        data: {
+                            images: imageData
+                        }
+                    });
+                    console.log('onSave');
+                });
+                console.log('exporting...');
             });
 
             break;
         case 'onClickRefresh':
             onChangeSelection();
+            break;
+        case 'onSaveDone':
+            console.log('saved');
             break;
         default:
             alert('Sent unknown action message');

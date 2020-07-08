@@ -1,4 +1,8 @@
 import {log} from './notify';
+import * as png from '@vivaxy/png';
+
+import PROFILES_MAP from './profiles-map.json';
+import PROFILES from './profiles.json';
 
 export function getExportables(): Array<SceneNode> {
     const selections: ReadonlyArray<SceneNode> = figma.currentPage.selection;
@@ -42,64 +46,51 @@ export async function exportGlyphs(layers) {
 }
 
 export async function exportAsync(nodes: Array<SceneNode>) {
-    const buffers = [];
+    const output = [];
 
     for (let node of nodes) {
         for (let option of node.exportSettings) {
-            buffers.push({
+            output.push({
                 name: `${node.name}${option.suffix}.${option.format.toLowerCase()}`,
-                byte: await node.exportAsync(option)
+                data: await node.exportAsync(option)
             });
         }
     }
 
     return new Promise(resolve => {
-        resolve(buffers);
+        resolve(output);
     });
 }
 
-export async function appendProfiles(buffers) {
-    log('appendProfiles');
+export async function appendProfile(images, profile) {
+    const iccName = PROFILES_MAP[profile.name][profile.version];
+    const iccData = PROFILES[iccName];
 
-    const images = [];
+    const output = [];
 
-    const getChunkLength = (lengthArr: Array<number>) => {
-        let length = 0;
+    for (const image of images) {
+        const encodedImage = await encodeImage(image, profile.name, iccData);
+        output.push(encodedImage);
+    }
 
-        lengthArr.forEach((l, i) => {
-            length += l * Math.pow(16, (lengthArr.length - i - 1) * 2);
-        });
+    return new Promise(resolve => {
+       resolve(output);
+    });
+}
 
-        return length;
+async function encodeImage(image, profileName, profileData) {
+    const metadata = png.decode(image.data.buffer);
+
+    metadata.icc = {
+        name: profileName,
+        profile: profileData
     };
 
-    for (let buffer of buffers) {
-        log('START: chunkAnalysis');
-        console.log(buffer.byte);
+    delete metadata.sRGB;
 
-        let processedBuffer: Array<number> = Array.from(buffer.byte);
+    image.data = png.encode(metadata);
 
-        while(processedBuffer.length > 0) {
-            let chunkLength: number, chunkType: Array<number> | string, chunkData: Array<number>, CRC: Array<number>;
-
-            if (processedBuffer.length === buffer.byte.length) {
-                chunkLength = 0;
-                chunkType = 'PNG SIGNATURE';
-                chunkData = processedBuffer.splice(0, 8);
-                CRC = [];
-            } else {
-                chunkLength = getChunkLength(processedBuffer.splice(0, 4));
-                chunkType = processedBuffer.splice(0, 4);
-                chunkData = processedBuffer.splice(0, chunkLength);
-                CRC = processedBuffer.splice(0, 4);
-            }
-
-            console.log('CHUNK LENGTH:', chunkLength);
-            console.log('CHUNK TYPE:', chunkType);
-            console.log('CHUNK DATA:', chunkData);
-            console.log('----');
-        }
-
-        log('END: chunkAnalysis');
-    }
+    return new Promise(resolve => {
+       resolve(image);
+    });
 }
