@@ -80,6 +80,45 @@ function setButtonState(state: boolean) {
     buttonDOM.disabled = !state;
 }
 
+function setProgressState({index, length, text}) {
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    progressBar.style.width = `${index / length * 100}%`;
+
+    switch (text) {
+        case 'null':
+            progressText.innerText = '';
+            break;
+        case 'saving':
+            progressText.innerText = 'Saving...';
+            break;
+        default:
+            progressText.innerText = text ? `${text} (${index}/${length})` : 'Saving...';
+    }
+}
+
+function setLoadingState(state: boolean) {
+    const loading = document.getElementById('loading');
+    const progress = document.getElementById('progress');
+
+    progress.style.opacity = state ? '1': '0';
+
+    loading.style.zIndex = state ? '100' : '-1';
+    loading.style.opacity = state ? '1' : '0';
+}
+
+function reset() {
+    setLoadingState(false);
+    setProgressState({
+        index: 0,
+        length: 1,
+        text: 'null'
+    });
+
+    window.removeEventListener('focus', reset);
+}
+
 function saveImages(images) {
     // @ts-ignore
     const zip = new JSZip();
@@ -92,11 +131,15 @@ function saveImages(images) {
        type: 'blob'
     }).then(zipFile => {
        saveAs(zipFile, 'assets.zip');
-       simplePost('onSaveDone');
+       simplePost('onDoneSave');
+
+       window.addEventListener('focus', reset);
     });
 }
 
 window.onload = () => {
+    reset();
+
     const profileList = document.getElementById('profile-list');
     const versionList: NodeListOf<HTMLInputElement> = document.getElementsByName('profile-version') as NodeListOf<HTMLInputElement>
 
@@ -136,10 +179,7 @@ window.onload = () => {
     });
 
     document.getElementById('btn-save').onclick = () => {
-        const loading = document.getElementById('loading');
-
-        loading.style.zIndex = '100';
-        loading.style.opacity = '1';
+        setLoadingState(true);
 
         const profile: HTMLInputElement = document.querySelector("input[name='color-profile']:checked");
         const version: HTMLInputElement = document.querySelector("input[name='profile-version']:checked");
@@ -187,11 +227,34 @@ window.onmessage = (e) => {
         case 'onChangeSelection':
             setButtonState(msg?.data?.isEnabled);
             break;
-        case 'onSave':
-            saveImages(msg?.data?.images);
+
+        case 'onRequestEncode':
+            setProgressState(msg?.data);
+
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'onResponseEncode',
+                    data: {
+                        index: msg.data.index
+                    }
+                }
+            }, '*');
+
             break;
+
+        case 'onRequestSave':
+            setProgressState({
+                index: 1,
+                length: 1,
+                text: 'saving'
+            });
+
+            saveImages(msg.data.images);
+
+            break;
+
         default:
-            console.error('Unknown message type is received');
+            console.log('Unknown message type is received:', msg.type);
     }
 };
 

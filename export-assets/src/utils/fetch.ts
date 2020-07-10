@@ -29,8 +29,8 @@ export function getSelections(): boolean | ReadonlyArray<SceneNode> {
     return selections;
 }
 
-export async function exportAsync(nodes: Array<SceneNode>) {
-    const output = [];
+export async function exportAsync(nodes: Array<SceneNode>): Promise<Array<{ name: string, data: Uint8Array }>> {
+    const output: Array<{name: string, data: Uint8Array}> = [];
 
     for (let node of nodes) {
         for (let option of node.exportSettings) {
@@ -41,40 +41,22 @@ export async function exportAsync(nodes: Array<SceneNode>) {
         }
     }
 
-    return new Promise(resolve => {
-        resolve(output);
-    });
+    return output;
 }
 
-export async function appendProfile(images, profile) {
-    const iccName = PROFILES_MAP[profile.name][profile.version];
-    const iccData = PROFILES[iccName];
-
-    const output = [];
-
-    for (const image of images) {
-        const encodedImage = await encodeImage(image, profile.name, iccData);
-        output.push(encodedImage);
-    }
-
-    return new Promise(resolve => {
-       resolve(output);
-    });
-}
-
-async function encodeImage(image, profileName, profileData) {
+export function encodeImage(image, profile) {
     const metadata = png.decode(image.data.buffer);
 
     metadata.icc = {
-        name: profileName,
-        profile: profileData
+        name: profile.name,
+        profile: PROFILES[
+            PROFILES_MAP[profile.name][profile.version]
+        ]
     };
 
     delete metadata.sRGB;
 
     image.data = png.encode(metadata);
 
-    return new Promise(resolve => {
-       resolve(image);
-    });
+    return image;
 }
