@@ -1,7 +1,7 @@
 {
-  "name": "export-assets",
+  "name": "export-png",
   "version": "0.0.1",
-  "description": "Export assets with other color profiles (not sRGB)",
+  "description": "Export PNG with other color profiles (such as Display P3)",
   "main": "dist/main.js",
   "scripts": {
     "clear": "rimraf dist",

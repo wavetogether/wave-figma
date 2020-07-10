@@ -1,5 +1,5 @@
 {
-  "name": "Export Assets",
+  "name": "Export PNG",
   "id": "856358448917754665",
   "api": "1.0.0",
   "main": "dist/main.js",
