@@ -120,6 +120,14 @@ function reset() {
 }
 
 function saveImages(images) {
+    if (images.length === 1) {
+        saveAs(new Blob(images[0].data), images[0].name);
+        simplePost('onDoneSave');
+
+        window.addEventListener('focus', reset);
+        return;
+    }
+
     // @ts-ignore
     const zip = new JSZip();
 
@@ -231,14 +239,16 @@ window.onmessage = (e) => {
         case 'onRequestEncode':
             setProgressState(msg?.data);
 
-            parent.postMessage({
-                pluginMessage: {
-                    type: 'onResponseEncode',
-                    data: {
-                        index: msg.data.index
+            setTimeout(() => {
+                parent.postMessage({
+                    pluginMessage: {
+                        type: 'onResponseEncode',
+                        data: {
+                            index: msg.data.index
+                        }
                     }
-                }
-            }, '*');
+                }, '*');
+            }, 10);
 
             break;
 
