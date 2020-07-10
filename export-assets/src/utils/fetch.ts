@@ -29,22 +29,6 @@ export function getSelections(): boolean | ReadonlyArray<SceneNode> {
     return selections;
 }
 
-export async function exportGlyphs(layers) {
-    const glyphs: Array<any> = [];
-    const exportOptions: ExportSettingsSVG = {format: 'SVG'};
-
-    for (let layer of layers) {
-        const byteData = new Uint8Array(await layer.exportAsync(exportOptions));
-        const glyph = String.fromCharCode.apply(null, byteData);
-
-        glyphs.push(glyph);
-    }
-
-    return new Promise(resolve => {
-        resolve(glyphs);
-    });
-}
-
 export async function exportAsync(nodes: Array<SceneNode>) {
     const output = [];
 
