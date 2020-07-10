@@ -1,6 +1,6 @@
 {
   "name": "export-png",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Export PNG with other color profiles (such as Display P3)",
   "main": "dist/main.js",
   "scripts": {
@@ -21,13 +21,11 @@
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "xml-js": "^1.6.11"
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
     "@types/jszip": "^3.1.7",
-    "@types/lodash": "^4.14.149",
     "@types/node": "^13.11.0",
     "rimraf": "^3.0.2"
   }
