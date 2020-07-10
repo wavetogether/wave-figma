@@ -1,8 +1,6 @@
 import {alert} from './utils/notify';
 import {getExportables, exportAsync, encodeImage} from './utils/fetch';
 
-import PROFILES from './utils/profiles.json';
-
 let imageStack: Array<{name: string, data: Uint8Array}> = [];
 let embedStack: Array<{name: string, data: Uint8Array}> = [];
 let profile = {
@@ -90,7 +88,7 @@ figma.ui.onmessage = async msg => {
             break;
 
         default:
-            alert('Sent unknown action message');
+            alert('Received unknown action message');
     }
 };
 
