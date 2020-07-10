@@ -263,6 +263,12 @@ window.onmessage = (e) => {
 
             break;
 
+        case 'onError':
+            reset();
+            setButtonState(false);
+
+            break;
+
         default:
             console.log('Unknown message type is received:', msg.type);
     }

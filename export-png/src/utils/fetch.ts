@@ -4,13 +4,23 @@ import * as png from '@vivaxy/png';
 import PROFILES_MAP from './profiles-map.json';
 import PROFILES from './profiles.json';
 
+function hasExportablePNG(settings): boolean {
+    for (const setting of settings) {
+        if (setting.format.toLowerCase() === "png") {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 export function getExportables(): Array<SceneNode> {
     const selections: ReadonlyArray<SceneNode> = figma.currentPage.selection;
     const exportables: Array<SceneNode> = [];
 
     if (!!selections) {
         selections.forEach((node) => {
-            if (node.exportSettings.length > 0) {
+            if (node.exportSettings.length > 0 && hasExportablePNG(node.exportSettings)) {
                 exportables.push(node);
             }
         });
@@ -34,10 +44,12 @@ export async function exportAsync(nodes: Array<SceneNode>): Promise<Array<{ name
 
     for (let node of nodes) {
         for (let option of node.exportSettings) {
-            output.push({
-                name: `${node.name}${option.suffix}.${option.format.toLowerCase()}`,
-                data: await node.exportAsync(option)
-            });
+            if (option.format.toLowerCase() === 'png') {
+                output.push({
+                    name: `${node.name}${option.suffix}.${option.format.toLowerCase()}`,
+                    data: await node.exportAsync(option)
+                });
+            }
         }
     }
 

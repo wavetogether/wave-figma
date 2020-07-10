@@ -38,17 +38,25 @@ figma.ui.onmessage = async msg => {
         case 'onClickSave':
             const nodes = getExportables();
 
-            imageStack = await exportAsync(nodes);
-            profile = msg.data;
+            if (nodes.length > 0) {
+                imageStack = await exportAsync(nodes);
+                profile = msg.data;
 
-            figma.ui.postMessage({
-                type: 'onRequestEncode',
-                data: {
-                    index: 0,
-                    length: imageStack.length,
-                    text: imageStack[0].name
-                }
-            });
+                figma.ui.postMessage({
+                    type: 'onRequestEncode',
+                    data: {
+                        index: 0,
+                        length: imageStack.length,
+                        text: imageStack[0].name
+                    }
+                });
+            } else {
+                alert('There is no node to export PNG');
+
+                figma.ui.postMessage({
+                    type: 'onError',
+                });
+            }
 
             break;
 
