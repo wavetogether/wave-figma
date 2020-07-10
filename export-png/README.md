@@ -3,6 +3,8 @@
 ![ ](./assets/img__plugin_export_png.png)
 
 A tool for exporting PNG with an embeded ICC profile such as Display P3
+<br>
+<br>
 
 ## Usage
 
