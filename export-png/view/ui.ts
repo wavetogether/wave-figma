@@ -248,7 +248,7 @@ window.onmessage = (e) => {
                         }
                     }
                 }, '*');
-            }, 10);
+            }, 50);
 
             break;
 
