@@ -51,7 +51,7 @@ figma.ui.onmessage = async msg => {
                     }
                 });
             } else {
-                alert('There is no node to export PNG');
+                alert('There is no node to export PNG (You should add export options first)');
 
                 figma.ui.postMessage({
                     type: 'onError',

@@ -77,7 +77,12 @@ function simplePost(type: string) {
 
 function setButtonState(state: boolean) {
     const buttonDOM = document.getElementById('btn-save') as HTMLButtonElement;
-    buttonDOM.disabled = !state;
+
+    if (state) {
+        buttonDOM.classList.remove('disabled');
+    } else {
+        buttonDOM.classList.add('disabled');
+    }
 }
 
 function setProgressState({index, length, text}) {
