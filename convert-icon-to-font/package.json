@@ -1,0 +1,15 @@
+{
+  "name": "icon2font",
+  "version": "1.0.0",
+  "description": "Convert icon nodes to TrueType font file",
+  "main": "code.js",
+  "scripts": {
+    "dev": "tsc --watch tsconfig.json",
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "Jay Jung (WAVE Corp.)",
+  "license": "MIT",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.15.0"
+  }
+}
