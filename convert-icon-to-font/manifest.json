@@ -2,6 +2,6 @@
   "name": "Convert Icon to Font",
   "id": "870660393739707839",
   "api": "1.0.0",
-  "main": "code.js",
-  "ui": "ui.html"
+  "main": "src/index.js",
+  "ui": "view/index.html"
 }

@@ -8,13 +8,6 @@
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
-    ],
-    "include": [
-      "manifest.json",
-      "code.ts"
-    ],
-    "exclude": [
-      "node_modules"
     ]
   }
 }

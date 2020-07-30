@@ -11,5 +11,10 @@
   "license": "MIT",
   "devDependencies": {
     "@figma/plugin-typings": "^1.15.0"
+  },
+  "dependencies": {
+    "jszip": "^3.5.0",
+    "svg2ttf": "^5.0.0",
+    "svgicons2svgfont": "^9.1.1"
   }
 }
