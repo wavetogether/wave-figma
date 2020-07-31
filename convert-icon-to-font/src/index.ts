@@ -12,9 +12,7 @@ async function convertIconToFont (
     const fontConfig = getFontConfig(glyphData, fontName);
 
     const fontData = await getIconFontData(glyphData, { fontName, fontHeight: 1000, normalize: true });
-    console.log('font data:', fontData);
     const fontBuffer = getFontBuffer(fontData);
-    console.log('font buffer:', fontBuffer);
 
     return new Promise((resolve) => {
        resolve([fontBuffer, fontConfig]);
@@ -58,7 +56,7 @@ async function onMessage ({ type, data }) {
 }
 
 function init () {
-    figma.showUI(__html__);
+    figma.showUI(__html__, { width: 240, height: 155 });
     figma.ui.onmessage = onMessage;
 }
 

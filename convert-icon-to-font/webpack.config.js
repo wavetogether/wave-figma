@@ -13,7 +13,7 @@ module.exports = (env, argv) => ({
     module: {
         rules: [
             { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
-            { test: /\.css$/, loader: [{ loader: 'style-loader' }, { loader: 'css-loader' }] },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             { test: /\.(png|jpg|gif|webp|svg)$/, loader: [{ loader: 'url-loader' }] },
         ],
     },

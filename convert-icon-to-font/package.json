@@ -2,7 +2,7 @@
   "name": "icon2font",
   "version": "1.0.0",
   "description": "Convert icon nodes to TrueType font file",
-  "main": "dist/code.js",
+  "main": "dist/index.js",
   "scripts": {
     "clear": "rimraf dist",
     "dev": "webpack --watch",

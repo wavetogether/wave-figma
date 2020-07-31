@@ -1,0 +1,265 @@
+html {
+    padding: 0;
+    margin: 0;
+}
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+* {
+    font-family: 'Inter', sans-serif;
+}
+*:focus {
+    outline: none;
+}
+button {
+    outline: none;
+    border: none;
+}
+
+#content {
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 115px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 16px 16px 24px 16px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #5E5E61;
+}
+
+.section-desc {
+    margin: 0;
+    margin-top: 4px;
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 12px;
+    color: #9E9EA1;
+}
+
+.section-text-input {
+    display: flex;
+    width: calc(100% + 8px);
+    height: 32px;
+    background: #F1F1F3;
+    margin-left: -4px;
+    margin-top: 12px;
+    position: relative;
+    border-radius: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-text {
+    margin: 0 12px;
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 400;
+    color: #2E113B;
+    outline: none;
+    border: none;
+}
+
+.section-text::placeholder {
+    color: #9E9EA1;
+}
+
+.section-text-helper {
+    margin-right: 12px;
+    line-height: 16px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #2E113B;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    z-index: 10;
+}
+
+#footer #btn-save {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 11px;
+    font-weight: 600;
+    background: #FF3E64;
+    color: #FFF;
+    cursor: pointer;
+}
+
+#footer #btn-save:hover {
+    background: #E6385A;
+}
+
+#footer #btn-save:disabled {
+    background: #E3E4E8;
+    color: #F5F6F8;
+    cursor: not-allowed;
+}
+
+#footer #btn-refresh {
+    display: none;
+}
+
+#footer #btn-save:disabled ~ #btn-refresh {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background: #F5F6F8;
+    cursor: pointer;
+}
+
+#footer #btn-save:disabled ~ #btn-refresh:hover {
+    background: #ECEDF0;
+}
+
+#footer #btn-refresh img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 1;
+    cursor: wait;
+}
+
+#progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #2E113B;
+    opacity: 0;
+}
+
+#progress-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 100;
+}
+
+#progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 40px;
+    background: #621884;
+    z-index: 10;
+}
+
+/* Loading Animation */
+
+@keyframes spinner-dom-o {
+    0%    { opacity: 1; transform: translate(0 0) }
+    49.99% { opacity: 1; transform: translate(16px,0) }
+    50%    { opacity: 0; transform: translate(16px,0) }
+    100%    { opacity: 0; transform: translate(0,0) }
+}
+
+@keyframes spinner-dom {
+    0% { transform: translate(0,0) }
+    50% { transform: translate(16px,0) }
+    100% { transform: translate(0,0) }
+}
+
+.spinner-dom div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    top: 42px;
+    left: 34px;
+}
+
+.spinner-dom div:nth-child(1) {
+    background: #41cbff;
+    animation: spinner-dom 0.8s linear infinite;
+    animation-delay: -0.4s;
+}
+
+.spinner-dom div:nth-child(2) {
+    background: #ff2663;
+    animation: spinner-dom 0.8s linear infinite;
+    animation-delay: 0s;
+}
+
+.spinner-dom div:nth-child(3) {
+    background: #41cbff;
+    animation: spinner-dom-o 0.8s linear infinite;
+    animation-delay: -0.4s;
+}
+
+.loading-spinner {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0);
+}
+
+.spinner-dom {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+}
+
+.spinner-dom div { box-sizing: content-box; }

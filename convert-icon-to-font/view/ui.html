@@ -1,17 +1,22 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create123</button>
-<button id="cancel">Cancel</button>
-<script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<div id="content">
+    <div class="section">
+        <h2 class="section-title">Font Name</h2>
+        <p class="section-desc">Add your font name for ease-to-use</p>
+        <div class="section-text-input">
+            <input type="text" id="input-font-name" class="section-text" placeholder="WaveIcon" />
+            <span class="section-text-helper">.ttf</span>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <button id="btn-save">Save</button>
+</div>
+<div id="loading">
+    <div class="loading-spinner">
+        <div class="spinner-dom">
+            <div></div><div></div><div></div>
+        </div>
+    </div>
+</div>
 
-    document.getElementById('create').onclick = () => {
-        const textbox = document.getElementById('count');
-        const count = parseInt(textbox.value, 10);
-        parent.postMessage({ pluginMessage: { type: 'req: save'} }, '*')
-    }
-
-    document.getElementById('cancel').onclick = () => {
-        parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-    }
-
-</script>
