@@ -2,7 +2,7 @@ export function getSelectedNodes (): ReadonlyArray<SceneNode> {
     const nodes = figma.currentPage.selection;
 
     if (nodes.length === 0) {
-        figma.notify('⚠️ There is no selection to export');
+        figma.notify('⚠️ ERR: There is no selection to export');
         return [];
     }
 
@@ -26,3 +26,5 @@ export async function exportGlyphs (
         resolve(glyphs);
     });
 }
+
+// check duplicate names
