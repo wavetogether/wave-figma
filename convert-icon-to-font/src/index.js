@@ -8,12 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { getSelectedNodes, exportGlyphs, hasDuplicatedNames } from './utils/fetch';
-import { convertGlyphToData, getFontConfig } from "./utils/convert";
+import { convertGlyphToData, getFontConfig } from './utils/convert';
+import { getIconFontData, getFontBuffer } from './utils/fontify';
 function convertIconToFont(nodes, fontName = 'WaveIcon') {
     return __awaiter(this, void 0, void 0, function* () {
         const glyphs = yield exportGlyphs(nodes);
         const glyphData = convertGlyphToData(glyphs, nodes);
         const fontConfig = getFontConfig(glyphData, fontName);
+        console.log('font config:', fontConfig);
+        const fontData = yield getIconFontData(glyphData, { fontName, fontHeight: 320, normalize: true });
+        const fontBuffer = getFontBuffer(fontData);
+        console.log('font data:', fontData);
+        console.log('font buffer:', fontBuffer);
+        return new Promise((resolve) => {
+            resolve([fontBuffer, fontConfig]);
+        });
     });
 }
 function onSave(fontName = 'WaveIcon') {
@@ -26,13 +35,18 @@ function onSave(fontName = 'WaveIcon') {
             figma.notify('⚠️ ERR: There are duplicated names in your selected nodes');
             return;
         }
-        // const [fontBuffer, fontConfig] = await convertIconToFont(nodes, fontName);
+        const [fontBuffer, fontConfig] = yield convertIconToFont(nodes, fontName);
+        figma.ui.postMessage({
+            type: 'res: save',
+            data: { fontBuffer, fontConfig, fontName }
+        });
     });
 }
 function onMessage({ type, data }) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (type) {
             case 'req: save':
+                console.log('req: save');
                 yield onSave();
                 break;
             case 'req: done':
