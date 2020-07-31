@@ -5,6 +5,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
+    "baseUrl": "src",
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
@@ -13,5 +14,12 @@
       "es6",
       "dom"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/index.ts",
+    "manifest.json"
+  ]
 }

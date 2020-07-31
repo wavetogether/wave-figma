@@ -11,12 +11,9 @@ async function convertIconToFont (
     const glyphData = convertGlyphToData(glyphs, nodes);
     const fontConfig = getFontConfig(glyphData, fontName);
 
-    console.log('font config:', fontConfig);
-
-    const fontData = await getIconFontData(glyphData, { fontName, fontHeight: 320, normalize: true });
-    const fontBuffer = getFontBuffer(fontData);
-
+    const fontData = await getIconFontData(glyphData, { fontName, fontHeight: 1000, normalize: true });
     console.log('font data:', fontData);
+    const fontBuffer = getFontBuffer(fontData);
     console.log('font buffer:', fontBuffer);
 
     return new Promise((resolve) => {

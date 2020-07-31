@@ -17,8 +17,6 @@ module.exports = (env, argv) => ({
             { test: /\.(png|jpg|gif|webp|svg)$/, loader: [{ loader: 'url-loader' }] },
         ],
     },
-
-    // Webpack tries these extensions for you if you omit the extension like "import './file'"
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js'],
     },
