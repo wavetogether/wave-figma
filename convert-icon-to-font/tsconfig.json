@@ -8,6 +8,10 @@
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
+    ],
+    "lib": [
+      "es6",
+      "dom"
     ]
   }
 }
