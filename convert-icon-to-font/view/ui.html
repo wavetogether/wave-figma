@@ -7,7 +7,7 @@
     document.getElementById('create').onclick = () => {
         const textbox = document.getElementById('count');
         const count = parseInt(textbox.value, 10);
-        parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
+        parent.postMessage({ pluginMessage: { type: 'req: save'} }, '*')
     }
 
     document.getElementById('cancel').onclick = () => {

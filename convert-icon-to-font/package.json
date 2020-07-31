@@ -2,15 +2,26 @@
   "name": "icon2font",
   "version": "1.0.0",
   "description": "Convert icon nodes to TrueType font file",
-  "main": "src/index.js",
+  "main": "dist/code.js",
   "scripts": {
-    "dev": "tsc --watch tsconfig.json",
-    "build": "tsc -p tsconfig.json"
+    "clear": "rimraf dist",
+    "dev": "webpack --watch",
+    "build": "webpack --mode=production"
   },
   "author": "Jay Jung (WAVE Corp.)",
   "license": "MIT",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.15.0"
+    "@figma/plugin-typings": "^1.15.0",
+    "css-loader": "^4.1.1",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "rimraf": "^3.0.2",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.1",
+    "typescript": "^3.9.7",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "jszip": "^3.5.0",
