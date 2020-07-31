@@ -25,9 +25,19 @@ export async function exportGlyphs (nodes: ReadonlyArray<SceneNode>): Promise<st
     });
 }
 
-export function hasDuplicatedNames (nodes: ReadonlyArray<SceneNode>): boolean {
+export function hasDuplicatedNames (nodes: ReadonlyArray<SceneNode>): Array<string> {
     const names = nodes.map(node => node.name.replace(/(\s*\/\s*)/g, '_'));
-    const nameSet = new Set(names);
 
-    return (names.length !== nameSet.size);
+    const uniqNames = [];
+    const duplNames = [];
+
+    for (let name of names) {
+        if (uniqNames.includes(name)) {
+            duplNames.push(name);
+        } else {
+            uniqNames.push(name);
+        }
+    }
+
+    return duplNames;
 }

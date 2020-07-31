@@ -26,13 +26,15 @@ async function convertIconToFont (
 
 async function onSave (fontName: string = 'WaveIcon') {
     const nodes = getSelectedNodes();
+    const duplNames = hasDuplicatedNames(nodes);
 
-    if (hasDuplicatedNames(nodes)) {
+    if (duplNames.length > 0) {
         figma.ui.postMessage({
             type: 'err: duplicated-names'
         });
 
         figma.notify('⚠️ ERR: There are duplicated names in your selected nodes (check your console)');
+        console.log('DUPLICATED NAMES:', duplNames);
 
         return;
     }
