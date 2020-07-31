@@ -9,9 +9,7 @@ export function getSelectedNodes (): ReadonlyArray<SceneNode> {
     return nodes;
 }
 
-export async function exportGlyphs (
-    nodes: ReadonlyArray<SceneNode>
-): Promise<string[]> {
+export async function exportGlyphs (nodes: ReadonlyArray<SceneNode>): Promise<string[]> {
     const glyphs: Array<string> = [];
     const options: ExportSettingsSVG = { format: 'SVG' };
 
@@ -27,4 +25,9 @@ export async function exportGlyphs (
     });
 }
 
-// check duplicate names
+export function hasDuplicatedNames (nodes: ReadonlyArray<SceneNode>): boolean {
+    const names = nodes.map(node => node.name.replace(/(\s*\/\s*)/g, '_'));
+    const nameSet = new Set(names);
+
+    return (names.length !== nameSet.size);
+}
