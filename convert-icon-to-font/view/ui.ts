@@ -39,6 +39,7 @@ function done () {
 }
 
 function save (data) {
+    console.log(data);
     setButtonState(false);
     setLoadingState(true);
 
@@ -80,7 +81,7 @@ window.onload = () => {
 
     saveButtonDOM.onclick = () => {
         postMessage('req: save', {
-            fontName: nameInputDOM.value
+            fontName: nameInputDOM.value || 'WaveIcon'
         });
     };
 
