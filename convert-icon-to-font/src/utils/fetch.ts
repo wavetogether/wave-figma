@@ -1,11 +1,6 @@
 export function getSelectedNodes (): ReadonlyArray<SceneNode> {
     const nodes = figma.currentPage.selection;
 
-    if (nodes.length === 0) {
-        figma.notify('⚠️ ERR: There is no selection to export');
-        return [];
-    }
-
     return nodes;
 }
 
