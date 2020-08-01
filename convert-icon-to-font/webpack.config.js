@@ -8,7 +8,7 @@ module.exports = (env, argv) => ({
 
     entry: {
         ui: './view/ui.ts',
-        code: './src/index.ts',
+        index: './src/index.ts'
     },
     module: {
         rules: [
