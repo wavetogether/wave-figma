@@ -3,6 +3,10 @@ import { convertGlyphToData, getFontConfig } from './utils/convert';
 import { getIconFontData, getFontBuffer } from './utils/fontify';
 import { TFontConfig } from './utils/types';
 
+function postMessage (type: string, data?: {}) {
+    figma.ui.postMessage({ type, data });
+}
+
 async function convertIconToFont (
     nodes: ReadonlyArray<SceneNode>,
     fontName: string = 'WaveIcon'
@@ -19,39 +23,57 @@ async function convertIconToFont (
     });
 }
 
-async function onSave (fontName: string = 'WaveIcon') {
+async function save (fontName: string = 'WaveIcon') {
     const nodes = getSelectedNodes();
     const duplNames = hasDuplicatedNames(nodes);
 
-    if (duplNames.length > 0) {
-        figma.ui.postMessage({
-            type: 'err: duplicated-names'
-        });
+    if (nodes.length === 0) {
+        postMessage('err: no-selection');
+        figma.notify('⚠️ ERR: There is no selection to export');
 
+        return;
+    }
+
+    if (duplNames.length > 0) {
+        postMessage('err: duplicated-names');
         figma.notify('⚠️ ERR: There are duplicated names in your selected nodes (check your console)');
+
         console.log('DUPLICATED NAMES:', duplNames);
 
         return;
     }
 
-    const [fontBuffer, fontConfig] = await convertIconToFont(nodes, fontName);
+    try {
+        const [fontBuffer, fontConfig] = await convertIconToFont(nodes, fontName);
 
-    figma.ui.postMessage({
-        type: 'res: save',
-        data: { fontBuffer, fontConfig, fontName }
-    });
+        postMessage('res: save', {
+            fontBuffer,
+            fontConfig,
+            fontName
+        });
+    } catch (err) {
+        postMessage('err: internal-error');
+        figma.notify('⚠️ ERR: Couldn\'t convert icon to font');
+    }
+
+
 }
 
 async function onMessage ({ type, data }) {
     switch (type) {
         case 'req: save':
-            console.log('req: save');
-            await onSave();
+            await save(data.fontName);
             break;
+
         case 'req: done':
             break;
+
+        case 'err: unknown-type':
+            console.log('UNKNOWN TYPE:', data.unknownType);
+            break;
+
         default:
-            figma.notify('⚠️ ERR: Unknown message type')
+            figma.notify(`⚠️ ERR: Unknown message type (${type})`)
     }
 }
 

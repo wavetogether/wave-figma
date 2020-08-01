@@ -169,38 +169,39 @@ button {
     cursor: wait;
 }
 
-#progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background: #2E113B;
-    opacity: 0;
-}
-
-#progress-text {
-    position: absolute;
-    top: 0;
-    left: 0;
+#message {
+    display: none;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-    text-align: center;
-    line-height: 40px;
-    font-size: 10px;
-    color: #fff;
-    font-weight: 500;
-    z-index: 100;
-}
-
-#progress-bar {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 40px;
-    background: #621884;
-    z-index: 10;
+    cursor: none;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 200;
+}
+
+#message .message-box {
+    display: inline-block;
+    max-width: 160px;
+    box-sizing: border-box;
+    padding: 4px 12px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    position: absolute;
+    bottom: 24px;
+}
+
+#message-text {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 14px;
+    color: #fff;
+    text-align: center;
 }
 
 /* Loading Animation */
@@ -228,19 +229,19 @@ button {
 }
 
 .spinner-dom div:nth-child(1) {
-    background: #41cbff;
+    background: #2FF5FF;
     animation: spinner-dom 0.8s linear infinite;
     animation-delay: -0.4s;
 }
 
 .spinner-dom div:nth-child(2) {
-    background: #ff2663;
+    background: #FF3062;
     animation: spinner-dom 0.8s linear infinite;
     animation-delay: 0s;
 }
 
 .spinner-dom div:nth-child(3) {
-    background: #41cbff;
+    background: #2FF5FF;
     animation: spinner-dom-o 0.8s linear infinite;
     animation-delay: -0.4s;
 }
