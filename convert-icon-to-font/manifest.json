@@ -1,5 +1,5 @@
 {
-  "name": "Convert Icon to Font",
+  "name": "Export Icon Font",
   "id": "870660393739707839",
   "api": "1.0.0",
   "main": "dist/code.js",
