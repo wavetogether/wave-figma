@@ -27,9 +27,7 @@ function setLoadingState (state: boolean) {
 }
 
 function reset () {
-    setButtonState(true);
-    setLoadingState(false);
-
+    loading(false);
     window.removeEventListener('focus', done);
 }
 
@@ -38,11 +36,12 @@ function done () {
     toast('Icon font is generated!');
 }
 
-function save (data) {
-    console.log(data);
-    setButtonState(false);
-    setLoadingState(true);
+function loading (state: boolean) {
+    setButtonState(!state);
+    setLoadingState(state);
+}
 
+function save (data) {
     const zip = new JSZip();
     const { fontBuffer, fontConfig, fontName } = data;
 
@@ -80,9 +79,13 @@ window.onload = () => {
     const toastBoxDOM = document.getElementById('message');
 
     saveButtonDOM.onclick = () => {
-        postMessage('req: save', {
-            fontName: nameInputDOM.value || 'WaveIcon'
-        });
+        loading(true);
+
+        setTimeout(() => {
+            postMessage('req: save', {
+                fontName: nameInputDOM.value || 'WaveIcon'
+            });
+        }, 100);
     };
 
     toastBoxDOM.style.display = 'flex';
