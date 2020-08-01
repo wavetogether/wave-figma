@@ -193,7 +193,7 @@ button {
     background: rgba(0, 0, 0, 0.75);
     border-radius: 16px;
     position: absolute;
-    bottom: 24px;
+    bottom: 28px;
 }
 
 #message-text {
