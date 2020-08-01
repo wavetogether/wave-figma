@@ -1,5 +1,5 @@
 {
-  "name": "icon2font",
+  "name": "export-icon-font",
   "version": "1.0.0",
   "description": "Convert icon nodes to TrueType font file",
   "main": "dist/index.js",
