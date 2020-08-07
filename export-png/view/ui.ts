@@ -126,7 +126,10 @@ function reset() {
 
 function saveImages(images) {
     if (images.length === 1) {
-        saveAs(new Blob(images[0].data), images[0].name);
+        saveAs(
+            new Blob([images[0].data], {type: "image/png"}),
+            images[0].name.replace(/\s*\/\s*/g, '__')
+        );
         simplePost('onDoneSave');
 
         window.addEventListener('focus', reset);
@@ -137,7 +140,7 @@ function saveImages(images) {
     const zip = new JSZip();
 
     for (let image of images) {
-        zip.file(`${image.name}`, Buffer.from(image.data));
+        zip.file(`${image.name.replace(/\s*\/\s*/g, '__')}`, Buffer.from(image.data));
     }
 
     zip.generateAsync({
