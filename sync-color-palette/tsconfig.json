@@ -1,9 +1,20 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es6",
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
+    ],
+    "lib": [
+      "es6",
+      "dom"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
