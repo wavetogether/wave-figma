@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">-->
+<div id="content">
+    <div class="section">
+        <h2 class="section-title">Palette Name Parser</h2>
+        <p class="section-desc">PALETTE_NAME will be parsed with the expression below</p>
+        <div class="section-text-input">
+            <input type="text" id="palette-name-parser" class="section-text" placeholder="{PALETTE_NAME}" />
+        </div>
+    </div>
+    <!--
+    <div class="section">
+        <h2 class="section-title">Opacity Parser</h2>
+        <p class="section-desc">OPACITY will be parsed with the expression below (OPACITY should be percentage: 5%)</p>
+        <div class="section-text-input">
+            <input type="text" id="opacity-parser" class="section-text" placeholder="{PALETTE_NAME}" />
+        </div>
+    </div>
+    -->
+    <div class="section">
+        <div class="section-separator"></div>
+        <div class="section-description">
+            This plugin inspired by
+            <a id="plugin" href="https://www.figma.com/community/plugin/748971588750337968/Semantic-Color-Sync" rel="external" target="_blank">
+                Semantic Color Sync
+            </a>
+            developed by YNAB
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <button id="btn-sync">Run Sync</button>
+</div>
+<div id="loading">
+    <div class="loading-spinner">
+        <div class="spinner-dom">
+            <div></div><div></div><div></div>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
