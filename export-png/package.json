@@ -13,7 +13,7 @@
   "dependencies": {
     "@vivaxy/png": "^1.3.0",
     "file-saver": "^2.0.2",
-    "jszip": "^3.3.0"
+    "jszip": "^3.7.0"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
