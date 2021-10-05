@@ -1,0 +1,7 @@
+{
+  "name": "Sync Color Palette",
+  "id": "890775038340313123",
+  "api": "1.0.0",
+  "main": "dist/index.js",
+  "ui": "dist/ui.html"
+}
