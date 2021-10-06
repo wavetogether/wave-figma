@@ -21,12 +21,14 @@ export function getFlutterIconMap (glyphData: TGlyphData): string {
 }
 
 export function getFlutterIconName (nodes: ReadonlyArray<SceneNode>): string {
-  let names = nodes.map((node) => node.name).sort();
+  let names = nodes.map((node) => _.trim(_.last(node.name.split('/'))));
   let enums = '';
+
+  names = _.uniq(names).sort();
 
   names.forEach((name) => {
     let iconName = _.replace(
-        _.toUpper(_.trim(_.last(name.split('/')))),
+        _.toUpper(name),
         /-/g,
         '_'
     );
