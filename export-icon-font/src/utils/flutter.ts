@@ -1,4 +1,5 @@
 import { TGlyphData } from './types';
+import _ from 'lodash';
 
 export function getFlutterIconMap (glyphData: TGlyphData): string {
   let maps = '';
@@ -19,8 +20,28 @@ export function getFlutterIconMap (glyphData: TGlyphData): string {
   return code;
 }
 
-export function getFlutterIconName (glyphData: TGlyphData): string {
-  let names = glyphData.map(({ metadata: { name }}) => name);
+export function getFlutterIconName (nodes: ReadonlyArray<SceneNode>): string {
+  let names = nodes.map((node) => node.name).sort();
+  let enums = '';
 
-  return '';
+  names.forEach((name) => {
+    let iconName = _.replace(
+        _.toUpper(_.trim(_.last(name.split('/')))),
+        /-/g,
+        '_'
+    );
+
+    enums += `  ${iconName},\n`;
+  });
+
+  let code = ''
+    + 'enum IconName {\n' + enums
+    + '}\n\n'
+    + 'extension IconNameExtension on IconName {\n'
+    + '  String get str {\n'
+    + "    return describeEnum(this).toLowerCase().replaceAll(\'_\', \'-\');\n"
+    + '  }\n'
+    + '}';
+
+  return code;
 }

@@ -43,11 +43,11 @@ function loading (state: boolean) {
 
 function save (data) {
     const zip = new JSZip();
-    const { fontBuffer, fontConfig, fontMap, fontName } = data;
+    const { fontBuffer, fontConfig, iconData, fontName } = data;
 
     zip.file(`${fontName}.ttf`, Buffer.from(fontBuffer.buffer));
     zip.file(`${fontName}Config.json`, JSON.stringify(fontConfig));
-    zip.file('flutter/icon_map.dart', fontMap);
+    zip.file('examples/flutter/data.dart', iconData);
 
     zip.generateAsync({
         type: 'blob'
@@ -90,7 +90,7 @@ window.onload = () => {
             postMessage('req: save', {
                 fontName: nameInputDOM.value || 'WaveIcon',
                 prefix: prefixInputDOM.value || '',
-                suffix: prefixInputDOM.value || '',
+                suffix: suffixInputDOM.value || '',
             });
         }, 100);
     };

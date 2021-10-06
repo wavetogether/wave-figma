@@ -61,7 +61,7 @@ export function convertGlyphToData (
   prefix: string,
   suffix: string,
 ): TGlyphData {
-    return glyphs.map((glyph, i) => {
+    const glyphData = glyphs.map((glyph, i) => {
         const name = trimIconName(nodes[i].name, prefix, suffix);
 
         /*
@@ -82,6 +82,8 @@ export function convertGlyphToData (
             }
         };
     });
+
+    return _.sortBy(glyphData, [data => data.metadata.name]);
 }
 
 export function getFontConfig (glyphData: TGlyphData, fontName: string = 'WaveIcon'): TFontConfig {

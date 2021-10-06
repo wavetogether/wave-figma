@@ -2,7 +2,7 @@ import { getSelectedNodes, exportGlyphs, hasDuplicatedNames } from './utils/fetc
 import { convertGlyphToData, getFontConfig } from './utils/convert';
 import { getIconFontData, getFontBuffer } from './utils/fontify';
 import { TFontConfig } from './utils/types';
-import {getFlutterIconMap} from "./utils/flutter";
+import { getFlutterIconMap, getFlutterIconName } from "./utils/flutter";
 
 function postMessage (type: string, data?: {}) {
     figma.ui.postMessage({ type, data });
@@ -21,10 +21,11 @@ async function convertIconToFont (
     const fontData = await getIconFontData(glyphData, { fontName, fontHeight: 1000, normalize: true });
     const fontBuffer = getFontBuffer(fontData);
 
-    const fontMap = getFlutterIconMap(glyphData);
+    const iconMap = getFlutterIconMap(glyphData);
+    const iconName = getFlutterIconName(nodes);
 
     return new Promise((resolve) => {
-       resolve([fontBuffer, fontConfig, fontMap]);
+       resolve([fontBuffer, fontConfig, `${iconMap}\n\n${iconName}`]);
     });
 }
 
@@ -53,12 +54,12 @@ async function save (
     }
 
     try {
-        const [fontBuffer, fontConfig, fontMap] = await convertIconToFont(nodes, fontName, prefix, suffix);
+        const [fontBuffer, fontConfig, iconData] = await convertIconToFont(nodes, fontName, prefix, suffix);
 
         postMessage('res: save', {
             fontBuffer,
             fontConfig,
-            fontMap,
+            iconData,
             fontName
         });
     } catch (err) {
