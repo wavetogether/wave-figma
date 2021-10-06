@@ -55,7 +55,7 @@ export function getFlutterIconWidget (fontName: string): string {
     + '  @override\n'
     + '  Widget build(BuildContext context) {\n'
     + '    return Text(\n'
-    + '      Characters(IconMap.get(name)).toString(),\n'
+    + '      Characters(IconMap.get(name.str)).toString(),\n'
     + `      style: TextStyle(fontSize: 24, fontFamily: '${fontName}', height: 1, fontWeight: FontWeight.normal},\n`
     + '    );\n'
     + '  }\n'
