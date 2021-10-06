@@ -2,6 +2,7 @@ import { getSelectedNodes, exportGlyphs, hasDuplicatedNames } from './utils/fetc
 import { convertGlyphToData, getFontConfig } from './utils/convert';
 import { getIconFontData, getFontBuffer } from './utils/fontify';
 import { TFontConfig } from './utils/types';
+import {getFlutterIconMap} from "./utils/flutter";
 
 function postMessage (type: string, data?: {}) {
     figma.ui.postMessage({ type, data });
@@ -9,21 +10,29 @@ function postMessage (type: string, data?: {}) {
 
 async function convertIconToFont (
     nodes: ReadonlyArray<SceneNode>,
-    fontName: string = 'WaveIcon'
-): Promise<[Buffer, TFontConfig]> {
+    fontName: string,
+    prefix: string,
+    suffix: string,
+): Promise<[Buffer, TFontConfig, String]> {
     const glyphs = await exportGlyphs(nodes);
-    const glyphData = convertGlyphToData(glyphs, nodes);
+    const glyphData = convertGlyphToData(glyphs, nodes, prefix, suffix);
     const fontConfig = getFontConfig(glyphData, fontName);
 
     const fontData = await getIconFontData(glyphData, { fontName, fontHeight: 1000, normalize: true });
     const fontBuffer = getFontBuffer(fontData);
 
+    const fontMap = getFlutterIconMap(glyphData);
+
     return new Promise((resolve) => {
-       resolve([fontBuffer, fontConfig]);
+       resolve([fontBuffer, fontConfig, fontMap]);
     });
 }
 
-async function save (fontName: string = 'WaveIcon') {
+async function save (
+  fontName: string = 'WaveIcon',
+  prefix: string = '',
+  suffix: string = ''
+) {
     const nodes = getSelectedNodes();
     const duplNames = hasDuplicatedNames(nodes);
 
@@ -44,11 +53,12 @@ async function save (fontName: string = 'WaveIcon') {
     }
 
     try {
-        const [fontBuffer, fontConfig] = await convertIconToFont(nodes, fontName);
+        const [fontBuffer, fontConfig, fontMap] = await convertIconToFont(nodes, fontName, prefix, suffix);
 
         postMessage('res: save', {
             fontBuffer,
             fontConfig,
+            fontMap,
             fontName
         });
     } catch (err) {
@@ -62,7 +72,7 @@ async function save (fontName: string = 'WaveIcon') {
 async function onMessage ({ type, data }) {
     switch (type) {
         case 'req: save':
-            await save(data.fontName);
+            await save(data.fontName, data.prefix, data.suffix);
             break;
 
         case 'req: done':
@@ -78,7 +88,7 @@ async function onMessage ({ type, data }) {
 }
 
 function init () {
-    figma.showUI(__html__, { width: 240, height: 155 });
+    figma.showUI(__html__, { width: 240, height: 280 });
     figma.ui.onmessage = onMessage;
 }
 

@@ -1,4 +1,5 @@
 import { TGlyphData, TFontConfig, TChunkable } from './types';
+import _ from 'lodash';
 
 const BASE_UNICODE = 0xe001;
 
@@ -45,9 +46,23 @@ function convertHashToUnicode (hash: number): string {
     return unicode;
 }
 
-export function convertGlyphToData (glyphs: Array<string>, nodes: ReadonlyArray<SceneNode>): TGlyphData {
+function trimIconName (name: string, prefix: string, suffix: string): string {
+    name = _.trimStart(name, prefix);
+    name = _.trimEnd(name, suffix);
+
+    name = name.replace(/(\s*\/\s*)/g, '_');
+
+    return name;
+}
+
+export function convertGlyphToData (
+  glyphs: Array<string>,
+  nodes: ReadonlyArray<SceneNode>,
+  prefix: string,
+  suffix: string,
+): TGlyphData {
     return glyphs.map((glyph, i) => {
-        const name = nodes[i].name.replace(/(\s*\/\s*)/g, '_');
+        const name = trimIconName(nodes[i].name, prefix, suffix);
 
         /*
          * BASE_UNICODE = 0xe900;

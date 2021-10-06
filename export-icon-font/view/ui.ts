@@ -43,10 +43,11 @@ function loading (state: boolean) {
 
 function save (data) {
     const zip = new JSZip();
-    const { fontBuffer, fontConfig, fontName } = data;
+    const { fontBuffer, fontConfig, fontMap, fontName } = data;
 
     zip.file(`${fontName}.ttf`, Buffer.from(fontBuffer.buffer));
     zip.file(`${fontName}Config.json`, JSON.stringify(fontConfig));
+    zip.file('flutter/icon_map.dart', fontMap);
 
     zip.generateAsync({
         type: 'blob'
@@ -75,7 +76,11 @@ window.onload = () => {
     reset();
 
     const saveButtonDOM = document.getElementById('btn-save');
+
     const nameInputDOM = document.getElementById('input-font-name') as HTMLInputElement;
+    const prefixInputDOM = document.getElementById('input-prefix') as HTMLInputElement;
+    const suffixInputDOM = document.getElementById('input-suffix') as HTMLInputElement;
+
     const toastBoxDOM = document.getElementById('message');
 
     saveButtonDOM.onclick = () => {
@@ -83,7 +88,9 @@ window.onload = () => {
 
         setTimeout(() => {
             postMessage('req: save', {
-                fontName: nameInputDOM.value || 'WaveIcon'
+                fontName: nameInputDOM.value || 'WaveIcon',
+                prefix: prefixInputDOM.value || '',
+                suffix: prefixInputDOM.value || '',
             });
         }, 100);
     };
