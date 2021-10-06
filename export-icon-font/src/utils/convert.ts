@@ -1,6 +1,6 @@
 import { TGlyphData, TFontConfig, TChunkable } from './types';
 
-const BASE_UNICODE = 0xe900;
+const BASE_UNICODE = 0xe001;
 
 function convertArrayToChunk (raw: TChunkable, size: number): Array<any> {
     const chunk: Array<any> = [];
@@ -48,8 +48,13 @@ function convertHashToUnicode (hash: number): string {
 export function convertGlyphToData (glyphs: Array<string>, nodes: ReadonlyArray<SceneNode>): TGlyphData {
     return glyphs.map((glyph, i) => {
         const name = nodes[i].name.replace(/(\s*\/\s*)/g, '_');
-        // const code = BASE_UNICODE + i;
-        // const unicode = '%u' + code.toString(16);
+
+        /*
+         * BASE_UNICODE = 0xe900;
+         *
+         * const code = BASE_UNICODE + i;
+         * const unicode = '%u' + code.toString(16);
+         */
 
         const hash = convertStringToHash(name);
         const unicode = convertHashToUnicode(hash);
