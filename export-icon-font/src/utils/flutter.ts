@@ -45,3 +45,25 @@ export function getFlutterIconName (nodes: ReadonlyArray<SceneNode>): string {
 
   return code;
 }
+
+export function getFlutterIconWidget (fontName: string): string {
+  let code = ''
+    + "import 'package:flutter/widgets.dart';\n\n"
+    + 'class IconExample extends StatelessWidget {\n'
+    + '  IconExample({ Key? key, required this.name }) : super(key: key);\n\n'
+    + '  final IconName name;\n\n'
+    + '  @override\n'
+    + '  Widget build(BuildContext context) {\n'
+    + '    return Text(\n'
+    + '      Characters(IconMap.get(name)).toString(),\n'
+    + `      style: TextStyle(fontSize: 24, fontFamily: '${fontName}', height: 1, fontWeight: FontWeight.normal},\n`
+    + '    );\n'
+    + '  }\n'
+    + '}';
+
+  return code;
+}
+
+export function getFlutterExample (widget: string, map: string, name: string): string {
+  return `${widget}\n\n${name}\n\n${map}`;
+}

@@ -43,11 +43,11 @@ function loading (state: boolean) {
 
 function save (data) {
     const zip = new JSZip();
-    const { fontBuffer, fontConfig, iconData, fontName } = data;
+    const { fontBuffer, fontConfig, flutterExample, fontName } = data;
 
     zip.file(`${fontName}.ttf`, Buffer.from(fontBuffer.buffer));
     zip.file(`${fontName}Config.json`, JSON.stringify(fontConfig));
-    zip.file('examples/flutter/data.dart', iconData);
+    zip.file('examples/flutter_example.dart', flutterExample);
 
     zip.generateAsync({
         type: 'blob'
