@@ -25,11 +25,12 @@ SOFTWARE.
 ### Libraries We Use
 
 **Under MIT License**
-- vivaxy/png
 - FileSaver.js
 - JSZip
 - webpack (including related projects)
-- css-loader, style-loader, ts-loader 
+- css-loader, style-loader, ts-loader
+- png-metadata-writer
+- pako
 
 **Under GPLv3 License**
 - JSZip

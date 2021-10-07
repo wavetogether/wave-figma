@@ -1,4 +1,3 @@
-import * as png from '@vivaxy/png';
 import pako from 'pako';
 import {
     encodeImageChunks,
