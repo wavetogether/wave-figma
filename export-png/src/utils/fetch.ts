@@ -1,5 +1,12 @@
-import {log} from './notify';
 import * as png from '@vivaxy/png';
+import pako from 'pako';
+import {
+    encodeImageChunks,
+    getDataBytes,
+    getImageChunks,
+    setProfileChunk
+} from './chunk';
+// import {log} from './notify';
 
 import PROFILES_MAP from './profiles-map.json';
 import PROFILES from './profiles.json';
@@ -57,18 +64,34 @@ export async function exportAsync(nodes: Array<SceneNode>): Promise<Array<{ name
 }
 
 export function encodeImage(image, profile) {
-    const metadata = png.decode(image.data.buffer);
+    console.log(`processing starts ... ${image.name}`);
 
-    metadata.icc = {
-        name: profile.name,
-        profile: PROFILES[
-            PROFILES_MAP[profile.name][profile.version]
-        ]
-    };
+    const _start = Date.now();
+    const _chunks = getImageChunks(image.data);
+    const _chunkData = getDataBytes({
+        'Profile name': convertStringToBytes(profile.name),
+        'Null separator': convertNumToByte(0),
+        'Compression method': convertNumToByte(0),
+        'Compressed profile': pako.deflate(PROFILES[PROFILES_MAP[profile.name][profile.version]]),
+    });
 
-    delete metadata.sRGB;
+    image.data = encodeImageChunks(setProfileChunk(_chunks, _chunkData));
 
-    image.data = png.encode(metadata);
+    console.log(`... processing ends: ${Date.now() - _start}ms\n\n`);
 
     return image;
+}
+
+function convertStringToBytes(val) {
+    const data = new Uint8Array(val.length);
+
+    for (let i = 0; i < val.length; i++) {
+        data[i] = val.charCodeAt(i);
+    }
+
+    return data;
+}
+
+function convertNumToByte(val) {
+    return new Uint8Array([val & 0xff]);
 }
