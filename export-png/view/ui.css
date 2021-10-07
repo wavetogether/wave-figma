@@ -92,7 +92,7 @@ button {
     font-size: 11px;
     font-weight: 500;
     line-height: 32px;
-    color: #595C61;
+    color: #7D7D83;
 }
 
 .group-input:hover {
@@ -100,7 +100,7 @@ button {
 }
 
 .group-input input:checked ~ .radio-mark {
-    background: #45E0FF;
+    background: #00E261;
 }
 
 .group-input input:checked ~ .radio-mark:after {
@@ -116,7 +116,7 @@ button {
 }
 
 .group-input input:checked ~ .radio-label {
-    color: #2E113B;
+    color: #101017;
 }
 
 .profile-version-list.disabled {
@@ -187,12 +187,12 @@ button {
 }
 
 .section-description #color-profile-github {
-    color: #06D6FF;
+    color: #42D7FF;
     text-decoration: none;
 }
 
 .section-description #color-profile-github:hover {
-    color: #00B8DC;
+    color: #17b0db;
 }
 
 .section-description #library-list {
@@ -230,13 +230,13 @@ button {
     height: 100%;
     font-size: 11px;
     font-weight: 600;
-    background: #FF3E64;
-    color: #FFF;
+    background: #FC5E42;
+    color: #F8F7FA;
     cursor: pointer;
 }
 
 #footer #btn-save:hover {
-    background: #E6385A;
+    background: #EF4D30;
 }
 
 #footer #btn-save:disabled {
@@ -294,7 +294,7 @@ button {
     left: 0;
     width: 100%;
     height: 40px;
-    background: #2E113B;
+    background: #351B94;
     opacity: 0;
 }
 
@@ -318,7 +318,7 @@ button {
     left: 0;
     width: 0;
     height: 40px;
-    background: #621884;
+    background: #5633D7;
     z-index: 10;
 }
 
@@ -347,19 +347,19 @@ button {
 }
 
 .spinner-dom div:nth-child(1) {
-    background: #41cbff;
+    background: #42D7FF;
     animation: spinner-dom 0.8s linear infinite;
     animation-delay: -0.4s;
 }
 
 .spinner-dom div:nth-child(2) {
-    background: #ff2663;
+    background: #CCFF42;
     animation: spinner-dom 0.8s linear infinite;
     animation-delay: 0s;
 }
 
 .spinner-dom div:nth-child(3) {
-    background: #41cbff;
+    background: #00E261;
     animation: spinner-dom-o 0.8s linear infinite;
     animation-delay: -0.4s;
 }
