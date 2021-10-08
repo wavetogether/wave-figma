@@ -90,7 +90,7 @@ export function getFontConfig (glyphData: TGlyphData, fontName: string = 'WaveIc
     const config: TFontConfig = { name: fontName, icons: {}};
 
     for (let glyphDatum of glyphData) {
-        config.icons[glyphDatum.metadata.name] = glyphDatum.metadata.unicode[0];
+        config.icons[glyphDatum.metadata.name] = escape(glyphDatum.metadata.unicode[0]);
     }
 
     return config;
