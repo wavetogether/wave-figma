@@ -3,6 +3,7 @@ import { convertGlyphToData, getFontConfig } from './utils/convert';
 import { getIconFontData, getFontBuffer } from './utils/fontify';
 import { TFontConfig } from './utils/types';
 import { getFlutterExample, getFlutterIconMap, getFlutterIconName, getFlutterIconWidget } from './utils/flutter';
+import { getRNExample, getRNIconComponent, getRNIconName } from './utils/react-native';
 
 function postMessage (type: string, data?: {}) {
     figma.ui.postMessage({ type, data });
@@ -13,7 +14,7 @@ async function convertIconToFont (
     fontName: string,
     prefix: string,
     suffix: string,
-): Promise<[Buffer, TFontConfig, String]> {
+): Promise<[Buffer, TFontConfig, String, String]> {
     const glyphs = await exportGlyphs(nodes);
     const glyphData = convertGlyphToData(glyphs, nodes, prefix, suffix);
     const fontConfig = getFontConfig(glyphData, fontName);
@@ -27,11 +28,17 @@ async function convertIconToFont (
         getFlutterIconName(nodes),
     );
 
+    const reactNativeExample = getRNExample(
+        getRNIconComponent(fontName),
+        getRNIconName(nodes),
+    );
+
     return new Promise((resolve) => {
        resolve([
            fontBuffer,
            fontConfig,
            flutterExample,
+           reactNativeExample,
        ]);
     });
 }
@@ -64,13 +71,15 @@ async function save (
         const [
             fontBuffer,
             fontConfig,
-            flutterExample
+            flutterExample,
+            reactNativeExample,
         ] = await convertIconToFont(nodes, fontName, prefix, suffix);
 
         postMessage('res: save', {
             fontBuffer,
             fontConfig,
             flutterExample,
+            reactNativeExample,
             fontName
         });
     } catch (err) {
