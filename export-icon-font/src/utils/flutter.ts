@@ -4,15 +4,21 @@ import _ from 'lodash';
 export function getFlutterIconMap (glyphData: TGlyphData): string {
   let maps = '';
 
-  glyphData.forEach(({ metadata: { name, unicode}}, index) => {
-    maps += `    '${name}': '${unicode.join('')}',\n`;
+  glyphData.forEach(({ metadata: { name, unicode}}) => {
+    const codes = [];
+
+    for (let i = 0; i < unicode[0].length; i++) {
+      codes.push(unicode[0].charCodeAt(i));
+    }
+
+    maps += `    '${name}': [${codes.join(', ')}],\n`;
   });
 
   let code = ''
     + 'class IconMap {\n'
-    + '  static const Map<String, String> _data = {\n' + maps
+    + '  static const Map<String, List<int>> _data = {\n' + maps
     + '  };\n\n'
-    + '  static String get(String key) {\n'
+    + '  static List<int> get(String key) {\n'
     + "    return _data[key]!;\n"
     + '  }\n'
     + '}';
@@ -57,7 +63,7 @@ export function getFlutterIconWidget (fontName: string): string {
     + '  @override\n'
     + '  Widget build(BuildContext context) {\n'
     + '    return Text(\n'
-    + '      Characters(IconMap.get(name.str)).toString(),\n'
+    + '      String.fromCharCodes(IconMap.get(name.str)),\n'
     + `      style: TextStyle(fontSize: 24, fontFamily: '${fontName}', height: 1, fontWeight: FontWeight.normal},\n`
     + '    );\n'
     + '  }\n'
