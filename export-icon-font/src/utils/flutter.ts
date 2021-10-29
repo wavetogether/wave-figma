@@ -64,7 +64,7 @@ export function getFlutterIconWidget (fontName: string): string {
     + '  Widget build(BuildContext context) {\n'
     + '    return Text(\n'
     + '      String.fromCharCodes(IconMap.get(name.str)),\n'
-    + `      style: TextStyle(fontSize: 24, fontFamily: '${fontName}', height: 1, fontWeight: FontWeight.normal},\n`
+    + `      style: TextStyle(fontSize: 24, fontFamily: '${fontName}', height: 1, fontWeight: FontWeight.normal,),\n`
     + '    );\n'
     + '  }\n'
     + '}';
