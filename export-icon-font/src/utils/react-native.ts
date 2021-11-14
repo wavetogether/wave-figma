@@ -3,10 +3,11 @@ import _ from 'lodash';
 export function getRNIconName (nodes: ReadonlyArray<SceneNode>): string {
     let names = nodes.map((node) => _.trim(_.last(node.name.split('/'))));
     let enums = '';
+    let types = '';
 
     names = _.uniq(names).sort();
 
-    names.forEach((name) => {
+    names.forEach((name, i) => {
         let iconName = _.replace(
             _.toUpper(name),
             /-/g,
@@ -14,11 +15,13 @@ export function getRNIconName (nodes: ReadonlyArray<SceneNode>): string {
         );
 
         enums += `  ${iconName} = '${name}',\n`;
+        types += `  '${name}'${i < names.length - 1 ? ' |' : ';'}\n`;
     });
 
     let code = ''
-        + 'export enum IconName {\n' + enums
-        + '}';
+        + 'export const enum IconName {\n' + enums
+        + '}\n\n'
+        + 'export type TIconName = \n' + types;
 
     return code;
 }

@@ -48,7 +48,7 @@ function save (data) {
     zip.file(`${fontName}.ttf`, Buffer.from(fontBuffer.buffer));
     zip.file(`${fontName}Config.json`, JSON.stringify(fontConfig));
     zip.file('examples/flutter_example.dart', flutterExample);
-    zip.file('examples/react_native_example.js', reactNativeExample);
+    zip.file('examples/react_native_example.tsx', reactNativeExample);
 
     zip.generateAsync({
         type: 'blob'
